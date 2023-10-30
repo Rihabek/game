@@ -54,7 +54,7 @@ int main()
                 default: {}
             }
         }
-        
+
         // Effacer l'écran (peindre en noir)
         SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
         SDL_RenderClear(renderer);
