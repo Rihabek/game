@@ -1,6 +1,10 @@
 #ifndef PARAMETRE_H
 #define PARAMETRE_H
 
+
+#include <SDL.h>
+#include <SDL_image.h>
+
 // Structures
 typedef struct {
     int x, y;
