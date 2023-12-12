@@ -206,15 +206,15 @@ void cleanPlayer(void){
 void initializePlayer(void){
     //Etat et direction au debut du jeu
     player.direction = RIGHT;
-    player.etat = FREEZ;
+    player.etat = IDLE;
 
-    //Numero de la frame ou commencer (0 = FREEZ)
+    //Numero de la frame ou commencer (0 = IDLE)
     player.frameNumber = 0;
 
     //Valeur de timer (animation)
     player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
 
-    //1 frame pour l'animation FREEZ
+    //1 frame pour l'animation IDLE
     player.frameMax = 1;
 
     //Coordonnees de depart
@@ -321,8 +321,8 @@ void updatePlayer(Input *input){
 
     //Si on n'appuie sur rien et qu'on est sur le sol
     if (input->right == 0 && input->left == 0 && input->jump == 0 && player.onGround == 1){
-        if (player.etat != FREEZ){
-            player.etat = FREEZ;
+        if (player.etat != IDLE){
+            player.etat = IDLE;
             player.frameNumber = 0;
             player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
             player.frameMax = 1;

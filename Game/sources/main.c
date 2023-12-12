@@ -11,7 +11,7 @@ unsigned int frameLimit = SDL_GetTicks() + 16;
 int go;
 
 // Initialisation de la SDL
-init("Défis des mystères");
+init("ZARAFA");
 
 // Initialisation de l'Audio
 initAudio();
