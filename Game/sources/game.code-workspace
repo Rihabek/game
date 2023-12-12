@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"path": "../../../../game"
+		},
+		{
+			"path": "../../../../belkhadiri-rihab"
+		},
+		{
+			"path": "../../../../tp2pg"
+		},
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../../../Téléchargements/rihab/L2 manel2/MANEL/TP3/CTP3"
+		},
+		{
+			"path": "../../../../../TP Test"
+		},
+		{
+			"path": "../../../../Fichiers-20231121"
+		},
+		{
+			"path": "../../../../cpu"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"graphique.h": "c",
+			"cstdlib": "c",
+			"parametre.h": "c",
+			"memoire.h": "c",
+			"niveau.h": "c",
+			"sdl.h": "c"
+		}
+	}
+}
