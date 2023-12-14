@@ -27,7 +27,7 @@ void drawMenu(void){
 
     //titre
     SDL_Texture *titre = loadImage("../sprites/titre.png");
-    drawImage(titre, 266, 75);
+    drawImage(titre, 220, 10);
 
     //commande
     SDL_Texture *commande = loadImage("../sprites/commande.png");

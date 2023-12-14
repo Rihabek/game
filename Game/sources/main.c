@@ -1,7 +1,7 @@
 #include "../headers/prototypes.h"
 #include "../headers/audio.h"
 
-/* D�claration des variables / structures utilis�es par le jeu */
+/* Déclaration des variables / structures utilisées par le jeu */
 Input input;
 
 
@@ -11,7 +11,7 @@ unsigned int frameLimit = SDL_GetTicks() + 16;
 int go;
 
 // Initialisation de la SDL
-init("ZARAFA");
+init("Défis des mystères");
 
 // Initialisation de l'Audio
 initAudio();
