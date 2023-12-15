@@ -47,6 +47,22 @@ void drawMenu(void){
     SDL_Delay(1);
 }
 
+void drawGameOver(void){
+    //background
+    drawImage(getBackground(),0,0);
+
+    // image game over
+    SDL_Texture* go = loadImage("../sprites/gameOver.png");
+    drawImage(go,0,0);
+    // Affiche l'�cran
+    SDL_RenderPresent(getrenderer());
+
+    SDL_Delay(1);
+}
+
+
+
+
 
 SDL_Texture *loadImage(char *name){
     /* Charge les images dans SDL_Surface */
@@ -113,7 +129,7 @@ void drawScore(SDL_Renderer *renderer, GameObject *player,TTF_Font *font){
     drawTexte(font,725,10,23,23,score);
 }
 void drawTitre(SDL_Renderer *renderer, TTF_Font *font){
-    drawTexte(font,100,100,75, 23,"ZARAFA");
+    drawTexte(font,100,100,75, 23,"défis des mystères");
 }
 void delay(unsigned int frameLimit){
     //60 images/seconde

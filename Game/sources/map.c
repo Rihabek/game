@@ -275,6 +275,9 @@ void drawPlayer(void){
         SDL_RenderCopyEx(getrenderer(), playerSpriteSheet, &src, &dest, 0, 0, SDL_FLIP_NONE);
 }
 
+
+
+
 void updatePlayer(Input *input){
     int x1 = (player.x) / TILE_SIZE;
     int x2 = (player.x+ player.w) / TILE_SIZE;
@@ -367,14 +370,20 @@ void updatePlayer(Input *input){
         if(player.score > readScore("../score/score.txt"))
             saveScore("../score/score.txt");
         input->jouer = 0;
-        initializePlayer();
+        drawGameOver();
+        SDL_Delay(3000);
+        cleanup();
     }
 
     //Pour la mort
     if(y2*TILE_SIZE > SCREEN_HEIGHT){
         player.alive = 0;
         input->jouer = 0;
-        initializePlayer();
+        drawGameOver();
+        SDL_Delay(3000);
+        cleanup();
+
     }
+
 
 }

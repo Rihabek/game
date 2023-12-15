@@ -5,7 +5,7 @@
 Input input;
 
 
-int main(int argc, char *argv[])
+int main()
 {
 unsigned int frameLimit = SDL_GetTicks() + 16;
 int go;
@@ -42,7 +42,8 @@ while (go == 1)
         //Gestion des inputs clavier
         getInput(&input);
 
-        // On met � jour le jeu, en commen�ant par le joueur
+        
+        // On met a jour le jeu, en commencant par le joueur
         updatePlayer(&input);
 
         drawGame();

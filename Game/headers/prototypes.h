@@ -49,5 +49,10 @@ extern TTF_Font *loadFont(char *name, int font_size);
 extern int readScore(char *name);
 extern void saveScore(char *name);
 extern void drawMenu(void);
+extern void drawGameOver(void);
+extern void resetGame(Input* input);
+
+
+
 
 #endif
