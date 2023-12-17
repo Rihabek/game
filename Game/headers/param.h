@@ -25,7 +25,7 @@
 
 /* Constantes pour l'animation */
 
-#define TIME_BETWEEN_2_FRAMES_PLAYER 7
+#define TIME_2_F 7
 
 /* Taille du sprite de notre heros (largeur = width et hauteur = heigth) */
 #define PLAYER_WIDTH 64

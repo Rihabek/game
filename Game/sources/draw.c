@@ -1,15 +1,15 @@
 #include "../headers/prototypes.h"
 
 
-void drawGame(void){
+void desGame(void){
     // Affiche le background � 0,0
-    drawImage(getBackground(), 0, 0);
+    desImage(getBackground(), 0, 0);
 
     // Affiche la map de tiles
-    drawMap();
+    desMap();
 
     // Affiche le joueur
-    drawPlayer();
+    desPlayer();
 
     // Affiche l'écran
     SDL_RenderPresent(getrenderer());
@@ -19,27 +19,27 @@ void drawGame(void){
 
 void drawMenu(void){
     //background
-    drawImage(getBackground(), 0, 0);
+    desImage(getBackground(), 0, 0);
 
     //tete 
     SDL_Texture *tete = loadImage("../sprites/tete.png");
-    drawImage(tete, 0, 226);
+    desImage(tete, 0, 226);
 
     //titre
     SDL_Texture *titre = loadImage("../sprites/titre.png");
-    drawImage(titre, 60, 10);
+    desImage(titre, 60, 10);
 
     //commande
     SDL_Texture *commande = loadImage("../sprites/commande.png");
-    drawImage(commande, 332, 457);
+    desImage(commande, 332, 457);
 
     //bouton quitter
     SDL_Texture *quitter = loadImage("../sprites/quitter.png");
-    drawImage(quitter, 480, 240);
+    desImage(quitter, 480, 240);
 
     //bouton jouer
     SDL_Texture *jouer = loadImage("../sprites/jouer.png");
-    drawImage(jouer, 180, 240);
+    desImage(jouer, 180, 240);
 
     // Affiche l'écran
     SDL_RenderPresent(getrenderer());
@@ -47,26 +47,24 @@ void drawMenu(void){
     SDL_Delay(1);
 }
 
-void drawGameOver(void){
+void desGameOver(void){
     //background
-    drawImage(getBackground(),0,0);
+    desImage(getBackground(),0,0);
 
     // image game over
     SDL_Texture* go = loadImage("../sprites/gameOver.png");
-    drawImage(go,0,0);
+    desImage(go,0,0);
     // Affiche l'écran
     SDL_RenderPresent(getrenderer());
 
     SDL_Delay(1);
 }
-
-
 
 
 
 
 SDL_Texture *loadImage(char *name){
-    /* Charge les images dans SDL_Surface */
+    /* les images dans SDL_Surface */
     SDL_Surface *image = NULL;
     SDL_Texture *texture = NULL;
     image = IMG_Load(name);
@@ -87,25 +85,27 @@ SDL_Texture *loadImage(char *name){
 
 TTF_Font *loadFont(char *name, int font_size){
     TTF_Font *font = TTF_OpenFont(name, font_size);
-    
+    if(font == NULL){
+        printf("ERROR : chargement font: \n",TTF_GetError());
+    }
     return font;
 }
 
-void drawImage(SDL_Texture *image, int x, int y){
+void desImage(SDL_Texture *image, int x, int y){
 
     SDL_Rect dest;
 
-    /* Régle le rectangle a dessiner selon la taille de l'image source */
+    /*  dessiner comme la taille de l'image  */
     dest.x = x;
     dest.y = y;
 
-    /* Dessine l'image entiére sur l'écran aux coordonnées x et y */
+    /* Dessine l'image  x et y */
     SDL_QueryTexture(image, NULL, NULL, &dest.w, &dest.h);
     SDL_RenderCopy(getrenderer(), image, NULL, &dest);
 
 }
 
-void drawTexte(TTF_Font *font, int x, int y, int w, int h, char *text){
+void desTexte(TTF_Font *font, int x, int y, int w, int h, char *text){
     SDL_Color noir = { 0, 0, 0 };
 
     SDL_Surface* surface = TTF_RenderText_Solid(font, text, noir);
@@ -116,19 +116,19 @@ void drawTexte(TTF_Font *font, int x, int y, int w, int h, char *text){
     SDL_RenderCopy(getrenderer(), texture, NULL, &dst);
 }
 
-void drawScore(SDL_Renderer *renderer, GameObject *player,TTF_Font *font){
+void desScore(SDL_Renderer *renderer, GameObject *player,TTF_Font *font){
     char score[20];
     //Score
-    drawTexte(font,650,50,75, 23,"Score : ");
+    desTexte(font,650,50,75, 23,"Score : ");
    	sprintf(score, "%d", player->score); // Conversion de l'entier
-    drawTexte(font,725,50,23,23,score);
+    desTexte(font,725,50,23,23,score);
     //Best score
-    drawTexte(font,575,10,150, 23,"Meilleur score : ");
+    desTexte(font,575,10,150, 23,"Meilleur score : ");
    	sprintf(score, "%d", readScore("../score/score.txt")); // Conversion de l'entier
-    drawTexte(font,725,10,23,23,score);
+    desTexte(font,725,10,23,23,score);
 }
 void drawTitre(SDL_Renderer *renderer, TTF_Font *font){
-    drawTexte(font,100,100,75, 23,"défis des mystères");
+    desTexte(font,100,100,75, 23,"défis des mystères");
 }
 void delay(unsigned int frameLimit){
     //60 images/seconde
@@ -146,7 +146,7 @@ void delay(unsigned int frameLimit){
 }
 
 
-void drawTile(SDL_Texture *image, int destx, int desty, int srcx, int srcy){
+void dessinerTile(SDL_Texture *image, int destx, int desty, int srcx, int srcy){
     //Rectangle de destination a dessiner
     SDL_Rect dest;
 

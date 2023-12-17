@@ -51,16 +51,16 @@ void init(char *title){
 
 
 
-void cleanup(){
+void freeAll(){
     //On libere la memoire
 
     //Sprites de la map
-    cleanMaps();
+    freeMaps();
 
-    //Sprite du h�ros
-    cleanPlayer();
+    //Sprite du thief
+    freePlayer();
 
-    //Fen�tre et renderer
+    //Fenetre et renderer
     SDL_DestroyRenderer(renderer);
     renderer = NULL;
     SDL_DestroyWindow(screen);

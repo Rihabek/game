@@ -4,7 +4,7 @@ Map map;
 int level;
 GameObject player;
 SDL_Texture *playerSpriteSheet;
-ScoreNode* scoresList = NULL;
+GameObject* scoresList = NULL;
 
 
 void initMaps(void){
@@ -76,7 +76,7 @@ void saveScore(char *name){
         fclose (pFile);
     }
     // Ajouter le score à la liste chaînée
-    ScoreNode* new = malloc(sizeof(ScoreNode));
+    GameObject* new = malloc(sizeof(GameObject));
     if (new == NULL) {
         perror("Error allocating memory");
         exit(EXIT_FAILURE);
@@ -88,9 +88,9 @@ void saveScore(char *name){
 
 // Fonction pour libérer la mémoire utilisée par la liste de scores
 void freeScoresList() {
-    ScoreNode* current = scoresList;
+    GameObject* current = scoresList;
     while (current != NULL) {
-        ScoreNode* temp = current;
+        GameObject* temp = current;
         current = current->next;
         free(temp);
     }
@@ -99,7 +99,7 @@ void freeScoresList() {
 
 
 
-void drawMap(){
+void desMap(){
     int dstx = 0;
     int dsty = 0;
     int srcx = 0;
@@ -110,42 +110,42 @@ void drawMap(){
             switch (map.tile[i][j]) {
                 case'0':
                     srcx = TILE_SIZE * 0;
-                    drawTile(map.tileSet, dstx, dsty, srcx, srcy);
+                    dessinerTile(map.tileSet, dstx, dsty, srcx, srcy);
                     dstx += TILE_SIZE;
                     break;
                 case '1':
                     srcx = TILE_SIZE * 1;
-                    drawTile(map.tileSet, dstx, dsty, srcx, srcy);
+                    dessinerTile(map.tileSet, dstx, dsty, srcx, srcy);
                     dstx += TILE_SIZE;
                     break;
                 case '2':
                     srcx = TILE_SIZE * 2;
-                    drawTile(map.tileSet, dstx, dsty, srcx, srcy);
+                    dessinerTile(map.tileSet, dstx, dsty, srcx, srcy);
                     dstx += TILE_SIZE;
                     break;
                 case'3':
                     srcx = TILE_SIZE * 3;
-                    drawTile(map.tileSet, dstx, dsty, srcx, srcy);
+                    dessinerTile(map.tileSet, dstx, dsty, srcx, srcy);
                     dstx += TILE_SIZE;
                     break;
                 case '4':
                     srcx = TILE_SIZE * 4;
-                    drawTile(map.tileSet, dstx, dsty, srcx, srcy);
+                    dessinerTile(map.tileSet, dstx, dsty, srcx, srcy);
                     dstx += TILE_SIZE;
                     break;
                 case '5':
                     srcx = TILE_SIZE * 5;
-                    drawTile(map.tileSet, dstx, dsty, srcx, srcy);
+                    dessinerTile(map.tileSet, dstx, dsty, srcx, srcy);
                     dstx += TILE_SIZE;
                     break;
                 case '6':
                     srcx = TILE_SIZE * 6;
-                    drawTile(map.tileSet, dstx, dsty, srcx, srcy);
+                    dessinerTile(map.tileSet, dstx, dsty, srcx, srcy);
                     dstx += TILE_SIZE;
                     break;
                 case '7':
                     srcx=TILE_SIZE *7;    
-                    drawTile(map.tileSet, dstx, dsty, srcx, srcy);
+                    dessinerTile(map.tileSet, dstx, dsty, srcx, srcy);
                     dstx += TILE_SIZE;
                     break;
                 default:
@@ -154,8 +154,8 @@ void drawMap(){
         }
         dsty += TILE_SIZE;
     }
-    TTF_Font *font = loadFont("../polices/score.ttf", 40);
-    drawScore(getrenderer(), &player,font);
+    TTF_Font *font = loadFont("../polices/titre3.ttf", 40);
+    desScore(getrenderer(), &player,font);
     TTF_CloseFont(font);
 }
 
@@ -174,7 +174,7 @@ void changeLevel(void){
 }
 
 
-void cleanMaps(void){
+void freeMaps(void){
     // Libere la texture du background
     if (map.background != NULL){
         SDL_DestroyTexture(map.background);
@@ -225,7 +225,7 @@ void initPlayerSprites(void){
 
 
 //Libere le sprite du thief a la fin du jeu
-void cleanPlayer(void){
+void freePlayer(void){
     if (playerSpriteSheet != NULL){
         SDL_DestroyTexture(playerSpriteSheet);
         playerSpriteSheet = NULL;
@@ -241,7 +241,7 @@ void initializePlayer(void){
     player.frameNumber = 0;
 
     //Valeur de timer (animation)
-    player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
+    player.frameTimer = TIME_2_F;
 
     //1 frame pour l'animation FREEZ
     player.frameMax = 1;
@@ -265,10 +265,10 @@ void initializePlayer(void){
 
 }
 
-void drawPlayer(void){
+void desPlayer(void){
     // Si compte a rebours arrive a zero
     if (player.frameTimer <= 0){
-        player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
+        player.frameTimer = TIME_2_F;
         player.frameNumber++;
 
         //Pour revenir a la frame de depart
@@ -282,12 +282,12 @@ void drawPlayer(void){
 
 
     //Rectangle de destination a dessiner
-    SDL_Rect dest;
+    SDL_Rect destination;
 
-    dest.x = player.x;
-    dest.y = player.y;
-    dest.w = player.w;
-    dest.h = player.h;
+    destination.x = player.x;
+    destination.y = player.y;
+    destination.w = player.w;
+    destination.h = player.h;
 
     //Rectangle source
     SDL_Rect src;
@@ -298,11 +298,11 @@ void drawPlayer(void){
 
     src.y = player.etat * player.h;
 
-    //Gestion du flip (retournement de l'image selon que le sprite regarde a droite ou a gauche
+    //Gestion du flip SDL le sprite regarde a droite ou a gauche
     if (player.direction == LEFT)
-        SDL_RenderCopyEx(getrenderer(), playerSpriteSheet, &src, &dest, 0, 0, SDL_FLIP_HORIZONTAL);
+        SDL_RenderCopyEx(getrenderer(), playerSpriteSheet, &src, &destination, 0, 0, SDL_FLIP_HORIZONTAL);
     else
-        SDL_RenderCopyEx(getrenderer(), playerSpriteSheet, &src, &dest, 0, 0, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(getrenderer(), playerSpriteSheet, &src, &destination, 0, 0, SDL_FLIP_NONE);
 }
 
 
@@ -321,7 +321,7 @@ void updatePlayer(Input *input){
             player.y += 4;
     }
 
-    //Si on detecte un appui sur la touche fleche gauche
+    //la touche fleche gauche
     if (input->left == 1){
 
         if ((map.tile[y2][x1] != '0')&&(map.tile[y2][x1] != '0')) {
@@ -331,13 +331,13 @@ void updatePlayer(Input *input){
             if (player.etat != WALK && player.onGround == 1){
                 player.etat = WALK;
                 player.frameNumber = 1;
-                player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
+                player.frameTimer = TIME_2_F;
                 player.frameMax = 2;
             }
         }
     }
 
-    //Si on detecte un appui sur la touche fleche droite
+    //la touche fleche droite
     if (input->right == 1){
         if ((map.tile[y2][x2] != '0')&&(map.tile[y2][x2] != '0')) {
           player.x += PLAYER_SPEED;
@@ -346,18 +346,18 @@ void updatePlayer(Input *input){
           if (player.etat != WALK && player.onGround == 1){
               player.etat = WALK;
               player.frameNumber = 1;
-              player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
+              player.frameTimer = TIME_2_F;
               player.frameMax = 2;
           }
         }
     }
 
-    //Si on n'appuie sur rien et qu'on est sur le sol
+    //on est sur le sol mode freez
     if (input->right == 0 && input->left == 0 && input->jump == 0 && player.onGround == 1){
         if (player.etat != FREEZ){
             player.etat = FREEZ;
             player.frameNumber = 0;
-            player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
+            player.frameTimer = TIME_2_F;
             player.frameMax = 1;
         }
     }
@@ -372,7 +372,7 @@ void updatePlayer(Input *input){
                     player.etat = JUMP1;
                     player.direction = player.direction;
                     player.frameNumber = 0;
-                    player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
+                    player.frameTimer = TIME_2_F;
                     player.frameMax = 1;
                 }
             }
@@ -393,7 +393,7 @@ void updatePlayer(Input *input){
                 player.etat = JUMP1;
                 player.direction = player.direction;
                 player.frameNumber = 0;
-                player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
+                player.frameTimer = TIME_2_F;
                 player.frameMax = 1;
 
             }
@@ -425,9 +425,9 @@ void updatePlayer(Input *input){
         }
 
         input->jouer = 0;
-        drawGameOver();
+        desGameOver();
         SDL_Delay(3000);
-        cleanup();
+        freeAll();
     }
 
 
@@ -435,7 +435,7 @@ void updatePlayer(Input *input){
     if(y2*TILE_SIZE > SCREEN_HEIGHT){
         player.alive = 0;
         input->jouer = 0;
-        drawGameOver();
+        desGameOver();
         SDL_Delay(3000);
         initializePlayer();
 

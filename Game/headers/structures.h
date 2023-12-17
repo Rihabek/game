@@ -28,12 +28,6 @@ typedef struct Map{
 
 } Map;
 
-// Définition de la structure pour les scores
-typedef struct ScoreNode {
-    int score;
-    struct ScoreNode* next;
-} ScoreNode;
-
 
 
 // Structure pour gérer nos sprites
@@ -59,6 +53,8 @@ typedef struct GameObject{
 
     //Pour le score
     int score;
+    struct GameObject* next;
+
 
 } GameObject;
 
