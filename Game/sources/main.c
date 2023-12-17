@@ -24,7 +24,7 @@ loadGame();
 /* On initialise le joueur */
 initializePlayer();
 
-// Appelle la fonction cleanup � la fin du programme
+// Appelle la fonction cleanup a la fin du programme
 atexit(cleanup);
 
 go = 1;

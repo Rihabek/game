@@ -95,11 +95,11 @@ void drawImage(SDL_Texture *image, int x, int y){
 
     SDL_Rect dest;
 
-    /* R�gle le rectangle � dessiner selon la taille de l'image source */
+    /* Régle le rectangle a dessiner selon la taille de l'image source */
     dest.x = x;
     dest.y = y;
 
-    /* Dessine l'image enti�re sur l'�cran aux coordonn�es x et y */
+    /* Dessine l'image entiére sur l'écran aux coordonnées x et y */
     SDL_QueryTexture(image, NULL, NULL, &dest.w, &dest.h);
     SDL_RenderCopy(getrenderer(), image, NULL, &dest);
 
@@ -147,7 +147,7 @@ void delay(unsigned int frameLimit){
 
 
 void drawTile(SDL_Texture *image, int destx, int desty, int srcx, int srcy){
-    //Rectangle de destination � dessiner
+    //Rectangle de destination a dessiner
     SDL_Rect dest;
 
     dest.x = destx;
@@ -163,6 +163,6 @@ void drawTile(SDL_Texture *image, int destx, int desty, int srcx, int srcy){
     src.w = TILE_SIZE;
     src.h = TILE_SIZE;
 
-    /* Dessine la tile choisie sur l'�cran aux coordonn�es x et y */
+    /* Dessine la tile choisie sur l'écran aux coordonnées x et y */
     SDL_RenderCopy(getrenderer(), image, &src, &dest);
 }

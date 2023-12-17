@@ -12,7 +12,7 @@
 //Pour les textes
 #include <SDL2/SDL_ttf.h>
 
-//Paramètres fenêtre
+//Parametres fenetre
 #define SCREEN_WIDTH 832
 #define SCREEN_HEIGHT 576
 
@@ -25,17 +25,17 @@
 
 /* Constantes pour l'animation */
 
-#define TIME_BETWEEN_2_FRAMES_PLAYER 4
+#define TIME_BETWEEN_2_FRAMES_PLAYER 7
 
-/* Taille du sprite de notre héros (largeur = width et hauteur = heigth) */
+/* Taille du sprite de notre heros (largeur = width et hauteur = heigth) */
 #define PLAYER_WIDTH 64
 #define PLAYER_HEIGTH 64
 
-//Vitesse de déplacement en pixels du sprite
-#define PLAYER_SPEED 2
+//Vitesse de deplacement en pixels du sprite
+#define PLAYER_SPEED 3
 
-//Valeurs attribuées aux états/directions
-#define IDLE 0
+//Valeurs attribuees aux etats/directions
+#define FREEZ 0
 #define WALK 1
 #define JUMP1 2
 #define DEAD 3
@@ -43,7 +43,7 @@
 #define RIGHT 1
 #define LEFT 2
 
-//Constantes définissant la gravité et la vitesse max de chute
+//Constantes definissant la gravite et la vitesse max de chute
 #define GRAVITY_SPEED 0.4
 #define MAX_FALL_SPEED 10
 #define JUMP_HEIGHT 40

@@ -3,22 +3,23 @@
 
 #include "param.h"
 
-//*** Les structures seront regroupées ici ***
+//*** Les structures seront regroupÃ©es ici ***
 
-//Input : gérer le clavier
+//Input : gÃ©rer le clavier
 typedef struct Input{
 
     int left, right, jump, quitter, jouer;
 
 } Input;
 
-//Map : gérer la map
+//Map : gÃ©rer la map
 typedef struct Map{
 
     SDL_Texture *background;
     SDL_Texture *tileSet;
+    SDL_Texture *padH;
 
-    // Coordonnées de départ du héros
+    // CoordonnÃ©es de dÃ©part du thief
     int beginx, beginy;
 
 
@@ -27,9 +28,17 @@ typedef struct Map{
 
 } Map;
 
-// Structure pour gérer nos sprites
+// DÃ©finition de la structure pour les scores
+typedef struct ScoreNode {
+    int score;
+    struct ScoreNode* next;
+} ScoreNode;
+
+
+
+// Structure pour gÃ©rer nos sprites
 typedef struct GameObject{
-    // Coordonnées du sprite
+    // Coordonnees du sprite
     int x, y;
 
     // Largeur, hauteur du sprite
@@ -37,19 +46,22 @@ typedef struct GameObject{
 
     // Pour l'animation
     int frameNumber, frameTimer, frameMax;
-    // etat : IDLE, WALK etc...
+    // etat : FREEZ, WALK etc...
     int etat, direction;
 
     //s'il est vivant/mort
     int alive;
     //s'il est sur le sol
     int onGround, timerSaut;
-    //Vecteurs de déplacement temporaires (pour collision)
+    //Vecteurs de deplacement temporaires (pour collision)
     float dirX, dirY;
+
 
     //Pour le score
     int score;
 
 } GameObject;
+
+
 
 #endif

@@ -224,7 +224,7 @@ void initPlayerSprites(void){
 }
 
 
-//Libere le sprite du heros a la fin du jeu
+//Libere le sprite du thief a la fin du jeu
 void cleanPlayer(void){
     if (playerSpriteSheet != NULL){
         SDL_DestroyTexture(playerSpriteSheet);
@@ -260,7 +260,7 @@ void initializePlayer(void){
     player.timerSaut = 0;
     player.onGround = 0;
 
-    //Le score est � z�ro
+    //Le score est a zéro
     player.score = 0;
 
 }
@@ -416,8 +416,7 @@ void updatePlayer(Input *input){
         map.tile[y1][x2] = '-';
         player.score += 10;
     }
-
-   // Plus tard dans votre code...
+    // pour l'aarrivée
     if (map.tile[y1][x1] == '6') {
         int highScore = readScore("../score/score.txt");
         
