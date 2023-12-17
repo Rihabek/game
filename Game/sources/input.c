@@ -6,15 +6,15 @@ void getInput(Input *input){
 
     //Keymapping : pour les touche du clavier
 
-    //SDL_PollEvent : test s'il y a des �v�nements en attente ou non
+    //SDL_PollEvent : test s'il y a des Evenements en attente ou non
     while (SDL_PollEvent(&event)){
-        //Test du type d'�v�nement
+        //Test du type d'evenement
         switch (event.type){
             case SDL_QUIT:
                 exit(0);
             break;
 
-            //Quand une touche est enfonc�e, on active l'�v�nement correspondant
+            //Quand une touche est enfoncee, on active l'evenement correspondant
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym){
                     case SDLK_ESCAPE:
@@ -42,7 +42,7 @@ void getInput(Input *input){
                 }
             break;
 
-            //Quand la touche est relev�e, on d�sactive l'�v�nement correspondant
+            //Quand la touche est relevee, on desactive l'evenement correspondant
             case SDL_KEYUP:
                 switch (event.key.keysym.sym){
                     case SDLK_SPACE:

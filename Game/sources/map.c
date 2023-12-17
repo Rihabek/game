@@ -4,6 +4,8 @@ Map map;
 int level;
 GameObject player;
 SDL_Texture *playerSpriteSheet;
+ScoreNode* scoresList = NULL;
+
 
 void initMaps(void){
     // Charge le background
@@ -64,7 +66,7 @@ int readScore(char *name){
 void saveScore(char *name){
     //On ouvre le fichier et verifie qu'il est non NULL
     FILE * pFile;
-    pFile=fopen (name,"w+");
+    pFile=fopen (name,"w");
     if (pFile==NULL){
         perror ("Error opening file");
     }
@@ -73,7 +75,29 @@ void saveScore(char *name){
         fprintf(pFile, "%i", player.score);
         fclose (pFile);
     }
+    // Ajouter le score à la liste chaînée
+    ScoreNode* new = malloc(sizeof(ScoreNode));
+    if (new == NULL) {
+        perror("Error allocating memory");
+        exit(EXIT_FAILURE);
+    }
+    new->score = player.score;
+    new->next = scoresList;
+    scoresList = new;
 }
+
+// Fonction pour libérer la mémoire utilisée par la liste de scores
+void freeScoresList() {
+    ScoreNode* current = scoresList;
+    while (current != NULL) {
+        ScoreNode* temp = current;
+        current = current->next;
+        free(temp);
+    }
+    scoresList = NULL;
+}
+
+
 
 void drawMap(){
     int dstx = 0;
@@ -116,6 +140,11 @@ void drawMap(){
                     break;
                 case '6':
                     srcx = TILE_SIZE * 6;
+                    drawTile(map.tileSet, dstx, dsty, srcx, srcy);
+                    dstx += TILE_SIZE;
+                    break;
+                case '7':
+                    srcx=TILE_SIZE *7;    
                     drawTile(map.tileSet, dstx, dsty, srcx, srcy);
                     dstx += TILE_SIZE;
                     break;
@@ -206,15 +235,15 @@ void cleanPlayer(void){
 void initializePlayer(void){
     //Etat et direction au debut du jeu
     player.direction = RIGHT;
-    player.etat = IDLE;
+    player.etat = FREEZ;
 
-    //Numero de la frame ou commencer (0 = IDLE)
+    //Numero de la frame ou commencer (0 = FREEZ)
     player.frameNumber = 0;
 
     //Valeur de timer (animation)
     player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
 
-    //1 frame pour l'animation IDLE
+    //1 frame pour l'animation FREEZ
     player.frameMax = 1;
 
     //Coordonnees de depart
@@ -233,6 +262,7 @@ void initializePlayer(void){
 
     //Le score est � z�ro
     player.score = 0;
+
 }
 
 void drawPlayer(void){
@@ -324,8 +354,8 @@ void updatePlayer(Input *input){
 
     //Si on n'appuie sur rien et qu'on est sur le sol
     if (input->right == 0 && input->left == 0 && input->jump == 0 && player.onGround == 1){
-        if (player.etat != IDLE){
-            player.etat = IDLE;
+        if (player.etat != FREEZ){
+            player.etat = FREEZ;
             player.frameNumber = 0;
             player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
             player.frameMax = 1;
@@ -350,7 +380,29 @@ void updatePlayer(Input *input){
         player.timerSaut = JUMP_TIMER;
     }
 
-    //Pour les rcompenses (cerises)
+    // Si le joueur entre en collision avec le numéro 7 et n'est pas en collision avec 0 ou 1
+    if (((map.tile[y1][x2] == '7') || (map.tile[y2][x1] == '7') || (map.tile[y2][x2] == '7'))
+        && (map.tile[y2][x1] != '0') && (map.tile[y2][x2] != '0')) {
+        // Effectuez les actions que vous souhaitez lorsque le joueur entre en collision avec le numéro 7
+        // Par exemple, faites un jump
+        // Assurez-vous que le joueur est sur le sol avant de le faire sauter
+        if (player.onGround == 1) {
+            player.y -= JUMP_HEIGHT;
+            player.onGround = 0;
+            if (player.etat != JUMP1) {
+                player.etat = JUMP1;
+                player.direction = player.direction;
+                player.frameNumber = 0;
+                player.frameTimer = TIME_BETWEEN_2_FRAMES_PLAYER;
+                player.frameMax = 1;
+
+            }
+        }
+    }
+
+   
+
+    //Pour les rcompenses
     if(map.tile[y2][x1] == '5'){
         map.tile[y2][x1] = '-';
         player.score += 10;
@@ -365,15 +417,20 @@ void updatePlayer(Input *input){
         player.score += 10;
     }
 
-    //Pour l'arriv�e
-    if(map.tile[y1][x1] == '6'){
-        if(player.score > readScore("../score/score.txt"))
+   // Plus tard dans votre code...
+    if (map.tile[y1][x1] == '6') {
+        int highScore = readScore("../score/score.txt");
+        
+        if (player.score > highScore) {
             saveScore("../score/score.txt");
+        }
+
         input->jouer = 0;
         drawGameOver();
         SDL_Delay(3000);
         cleanup();
     }
+
 
     //Pour la mort
     if(y2*TILE_SIZE > SCREEN_HEIGHT){
@@ -381,7 +438,7 @@ void updatePlayer(Input *input){
         input->jouer = 0;
         drawGameOver();
         SDL_Delay(3000);
-        cleanup();
+        initializePlayer();
 
     }
 

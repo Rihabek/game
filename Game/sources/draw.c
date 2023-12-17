@@ -11,7 +11,7 @@ void drawGame(void){
     // Affiche le joueur
     drawPlayer();
 
-    // Affiche l'�cran
+    // Affiche l'écran
     SDL_RenderPresent(getrenderer());
 
     SDL_Delay(1);
@@ -21,13 +21,13 @@ void drawMenu(void){
     //background
     drawImage(getBackground(), 0, 0);
 
-    //tete girafe
+    //tete 
     SDL_Texture *tete = loadImage("../sprites/tete.png");
     drawImage(tete, 0, 226);
 
     //titre
     SDL_Texture *titre = loadImage("../sprites/titre.png");
-    drawImage(titre, 220, 10);
+    drawImage(titre, 60, 10);
 
     //commande
     SDL_Texture *commande = loadImage("../sprites/commande.png");
@@ -41,7 +41,7 @@ void drawMenu(void){
     SDL_Texture *jouer = loadImage("../sprites/jouer.png");
     drawImage(jouer, 180, 240);
 
-    // Affiche l'�cran
+    // Affiche l'écran
     SDL_RenderPresent(getrenderer());
 
     SDL_Delay(1);
@@ -54,11 +54,12 @@ void drawGameOver(void){
     // image game over
     SDL_Texture* go = loadImage("../sprites/gameOver.png");
     drawImage(go,0,0);
-    // Affiche l'�cran
+    // Affiche l'écran
     SDL_RenderPresent(getrenderer());
 
     SDL_Delay(1);
 }
+
 
 
 
@@ -74,7 +75,7 @@ SDL_Texture *loadImage(char *name){
         // Conversion de l'image en texture
         texture = SDL_CreateTextureFromSurface(getrenderer(), image);
 
-        // On se d�barrasse du pointeur vers une surface
+        // On se débarrasse du pointeur vers une surface
         SDL_FreeSurface(image);
         image = NULL;
     }else
@@ -86,9 +87,7 @@ SDL_Texture *loadImage(char *name){
 
 TTF_Font *loadFont(char *name, int font_size){
     TTF_Font *font = TTF_OpenFont(name, font_size);
-    if(font == NULL){
-        printf("ERROR : chargement font: \n");
-    }
+    
     return font;
 }
 

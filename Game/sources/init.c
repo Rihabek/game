@@ -12,7 +12,7 @@ SDL_Renderer *getrenderer(void){
 
 
 void init(char *title){
-    //Cr�ation de la fen�tre
+    //Création de la fen�tre
 
     screen = SDL_CreateWindow(title,
                                   SDL_WINDOWPOS_CENTERED,
@@ -20,7 +20,7 @@ void init(char *title){
                                   SCREEN_WIDTH, SCREEN_HEIGHT,
                                   SDL_WINDOW_SHOWN);
 
-    //Cr�ation du renderer
+    //Création du renderer
     renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_PRESENTVSYNC);
 
     // Si erreur
@@ -52,7 +52,7 @@ void init(char *title){
 
 
 void cleanup(){
-    //On lib�re la m�moire
+    //On libere la memoire
 
     //Sprites de la map
     cleanMaps();
